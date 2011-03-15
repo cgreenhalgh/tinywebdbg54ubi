@@ -1,5 +1,5 @@
-application: customtinywebdb
-version: 1
+application: tinywebdbg54ubi
+version: 2
 runtime: python
 api_version: 1
 
