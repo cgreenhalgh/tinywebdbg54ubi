@@ -35,6 +35,7 @@ MainMessage = '''
 <p>Please use a URL with an additional path element (user id) to access this 
 variant of the TinyWebDB service, for example
 <a href="test/">test/</a></p>
+<p>There is also a simple Javascript client example: <a href="jsclient/index.html">jsclient/index.html</a></p>
 '''
 
 

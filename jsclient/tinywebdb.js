@@ -63,6 +63,6 @@ function set_value(url, tag, value, async) {
 	if (async==undefined)
 		async = false;
     var data = {tag: tag, value: value};
-	url = url+'setvalue';
+	url = url+'storeavalue';
     return do_post(url, data, async);
 }
