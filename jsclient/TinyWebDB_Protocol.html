@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>TinyWebDB Protocol</title>
+</head>
+<body>
+<h1>TinyWebDB Protocol</h1>
+Store:<br>
+<ul>
+  <li>POST, form '/storeavalue' , [ 'fmt'='html' - optional] 'tag' =
+&lt;tag&gt; (string), 'value' = &lt;value&gt; (string)
+(x-www-form-urlencoded)</li>
+  <ul>
+    <li>GET returns HTML form</li>
+  </ul>
+  <ul>
+    <li>curl -v -F tag=cmg1 -F value=value1 http://appinvtinywebdb.appspot.com/storeavalue</li>
+  </ul>
+  <li>return ['STORED',&lt;tag&gt;,&lt;value&gt;]</li>
+</ul>
+Get:<br>
+<ul>
+  <li>POST form '/getvalue', x-www-form-urlencoded,&nbsp;[ 'fmt'='html' - optional] 'tag'=&lt;tag&gt; (string)</li>
+  <ul>
+    <li>GET returns HTML form</li>
+    <li>curl -v -F tag=cmg1 http://appinvtinywebdb.appspot.com/getvalue</li>
+  </ul>
+  <li>return ['VALUE',&lt;tag&gt;,&lt;value&gt;] (escaped if HTML)</li>
+</ul>
+Delete:<br>
+<ul>
+  <li>POST /deleteentry, entry_key_string (tag present but ignored)</li>
+</ul>
+</body>
+</html>
