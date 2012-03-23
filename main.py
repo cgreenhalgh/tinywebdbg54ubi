@@ -238,9 +238,16 @@ def show_stored_data(self, user):
 def WritePhoneOrWeb(handler, writer, user):
   if handler.request.get('fmt') == "html":
     WritePhoneOrWebToWeb(handler, writer, user)
-  else:
+  elif handler.request.get('jsonp') == '':
     handler.response.headers['Content-Type'] = 'application/jsonrequest'
     writer()
+  else:
+    handler.response.headers['Content-Type'] = 'text/javascript'
+    handler.response.out.write(handler.request.get('jsonp'))
+    handler.response.out.write('(')
+    writer()
+    handler.response.out.write(')')
+    
 
 #### Result when writing to the Web
 def WritePhoneOrWebToWeb(handler, writer, user):

@@ -8,25 +8,25 @@
 <h1>TinyWebDB Protocol</h1>
 Store:<br>
 <ul>
-  <li>POST, form '/storeavalue' , [ 'fmt'='html' - optional] 'tag' =
+  <li>POST, form '/&lt;NAMESPACE&gt;/storeavalue' , [ 'fmt'='html' - optional]  ['jsonp'=&lt;JSONP function&gt; - optional] 'tag' =
 &lt;tag&gt; (string), 'value' = &lt;value&gt; (string)
 (x-www-form-urlencoded)</li>
   <ul>
     <li>GET returns HTML form</li>
   </ul>
   <ul>
-    <li>curl -v -F tag=cmg1 -F value=value1 http://appinvtinywebdb.appspot.com/storeavalue</li>
+    <li>curl -v -F tag=cmg1 -F value=value1 http://tinywebdbg54ubi.appspot.com/EXAMPLE/storeavalue</li>
   </ul>
-  <li>return ['STORED',&lt;tag&gt;,&lt;value&gt;]</li>
+  <li>return ['STORED',&lt;tag&gt;,&lt;value&gt;] (escaped if HTML, surrounded with &lt;JSONP function&gt;(...) if JSONP)</li>
 </ul>
 Get:<br>
 <ul>
-  <li>POST form '/getvalue', x-www-form-urlencoded,&nbsp;[ 'fmt'='html' - optional] 'tag'=&lt;tag&gt; (string)</li>
+  <li>POST form '/&lt;NAMESPACE&gt;/getvalue', x-www-form-urlencoded,&nbsp;[ 'fmt'='html' - optional] ['jsonp'=&lt;JSONP function&gt; - optional] 'tag'=&lt;tag&gt; (string)</li>
   <ul>
     <li>GET returns HTML form</li>
-    <li>curl -v -F tag=cmg1 http://appinvtinywebdb.appspot.com/getvalue</li>
+    <li>curl -v -F tag=cmg1 http://tinywebdbg54ubi.appspot.com/EXAMPLE/getvalue</li>
   </ul>
-  <li>return ['VALUE',&lt;tag&gt;,&lt;value&gt;] (escaped if HTML)</li>
+  <li>return ['VALUE',&lt;tag&gt;,&lt;value&gt;] (escaped if HTML, surrounded with &lt;JSONP function&gt;(...) if JSONP)</li>
 </ul>
 Delete:<br>
 <ul>
