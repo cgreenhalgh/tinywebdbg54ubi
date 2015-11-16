@@ -11,13 +11,14 @@
 
 ### Modified by Chris Greenhalgh
 
+import webapp2
 import logging
 from cgi import escape
-from google.appengine.ext import webapp
+from google.appengine.ext import ndb as db
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.ext.db import Key
-from django.utils import simplejson as json
+import json
 
 class StoredData(db.Model):
   user = db.StringProperty()
@@ -39,7 +40,7 @@ variant of the TinyWebDB service, for example
 '''
 
 
-class MainPage(webapp.RequestHandler):
+class MainPage(webapp2.RequestHandler):
 
   def get(self):
     write_page_header(self, None);
@@ -66,7 +67,7 @@ can invoke the get and store operations by hand, view the existing entries, and 
 </td> </tr> </table>'''
 
 
-class List(webapp.RequestHandler):
+class List(webapp2.RequestHandler):
 
   def get(self, user):
     write_page_header(self, user);
@@ -86,7 +87,7 @@ class List(webapp.RequestHandler):
 ### to post and to get.
 
 
-class StoreAValue(webapp.RequestHandler):
+class StoreAValue(webapp2.RequestHandler):
 
   def store_a_value(self, tag, value, user):
     # There's a potential readers/writers error here :(
@@ -117,7 +118,7 @@ class StoreAValue(webapp.RequestHandler):
        <input type="submit" value="Store a value">
     </form></body></html>\n''' % (user))
 
-class GetValue(webapp.RequestHandler):
+class GetValue(webapp2.RequestHandler):
 
   def get_value(self, tag, user):
     entry = db.GqlQuery("SELECT * FROM StoredData where tag = :1 AND user = :2", tag, user).get()
@@ -150,7 +151,7 @@ class GetValue(webapp.RequestHandler):
 ### The DeleteEntry is called from the Web only, by pressing one of the
 ### buttons on the main page.  So there's no get method, only a post.
 
-class DeleteEntry(webapp.RequestHandler):
+class DeleteEntry(webapp2.RequestHandler):
 
   def post(self, user):
     logging.debug('/deleteentry?%s\n|%s|' %
@@ -278,7 +279,7 @@ def WriteWebFooter(handler, writer, user):
 def dbSafeDelete(key):
   if db.get(key) :  db.delete(key)
 
-class CleanUser(webapp.RequestHandler):
+class CleanUser(webapp2.RequestHandler):
 
   def post(self, user):
     if user == None:  
@@ -293,7 +294,7 @@ class CleanUser(webapp.RequestHandler):
 ### Assign the classes to the URL's
 
 application =     \
-   webapp.WSGIApplication([('/', MainPage),
+   webapp2.WSGIApplication([('/', MainPage),
                            (r'/([^/]+)/', List),
                            (r'/([^/]+)/storeavalue', StoreAValue),
                            (r'/([^/]+)/deleteentry', DeleteEntry),
